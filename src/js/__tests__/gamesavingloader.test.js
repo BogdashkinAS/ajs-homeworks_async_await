@@ -1,6 +1,6 @@
 import GameSavingLoader from '../gamesavingloader.js';
 
-test('Проверка работы GameSavingLoader - success', async () => {
+test('Make GameSavingLoader', async () => {
     try {
         const result = {
             id: 9,
@@ -13,8 +13,17 @@ test('Проверка работы GameSavingLoader - success', async () => {
             },
         };
       const saving = await GameSavingLoader.load();
-          expect(saving).toEqual(result);
+          await expect(saving).toEqual(result);
     } catch (error) {
           await expect(Promise.reject(new Error('Error'))).rejects.toThrow('Error');
+    }
+});
+
+test('Find name of class', async () => {
+    try {
+      const saving = await GameSavingLoader.load();
+          await expect(Object.getPrototypeOf(saving).constructor.name).toEqual('GameSaving');
+    } catch (error) {
+          await expect(Promise.reject(new Error('Error in class'))).rejects.toThrow('Error in class');
     }
 });
